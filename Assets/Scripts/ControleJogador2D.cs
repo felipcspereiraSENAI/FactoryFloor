@@ -1,34 +1,41 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class ControleJogador2D : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private float moveHorizontal; // Esta variável é usada por toda a classe
-
     [Header("Configurações de Movimento")]
-    public float velocidade = 5f;
-    public float forcaPulo = 5f;
+    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float jumpForce = 12f;
 
-    void Start()
+    private Rigidbody2D rb;
+    private float moveInputX;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    // Método disparado pelo Player Input (Action: Move)
+    public void OnMove(InputValue value)
     {
-        // CORREÇÃO: Removemos a palavra "float" daqui para atualizar a variável global da classe
-        moveHorizontal = Input.GetAxis("Horizontal");
+        Vector2 inputVector = value.Get<Vector2>();
+        moveInputX = inputVector.x;
+    }
 
-        // Pulo: Checa se a velocidade vertical está próxima de zero (personagem parado no chão)
-        if (Input.GetButtonDown("Jump") && Mathf.Abs(rb.linearVelocity.y) < 0.01f)
+    // Método disparado pelo Player Input (Action: Jump)
+    public void OnJump(InputValue value)
+    {
+        // Pula apenas se a velocidade vertical estiver próxima de zero (personagem no chão)
+        if (value.isPressed && Mathf.Abs(rb.linearVelocity.y) < 0.01f)
         {
-            rb.AddForce(new Vector2(0f, forcaPulo), ForceMode2D.Impulse);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        // Agora o FixedUpdate consegue ler o valor correto atualizado pelo Update
-        rb.linearVelocity = new Vector2(moveHorizontal * velocidade, rb.linearVelocity.y);
+        // Aplica o movimento horizontal mantendo a força Y da gravidade/pulo
+        rb.linearVelocity = new Vector2(moveInputX * moveSpeed, rb.linearVelocity.y);
     }
 }
