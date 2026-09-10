@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public class ControleJogador2D : MonoBehaviour
 {
     [Header("Configurações de Movimento")]
-    [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float jumpForce = 12f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float jumpForce = 2f;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -45,7 +45,7 @@ public class ControleJogador2D : MonoBehaviour
     private void Update()
     {
         // Considera no chão se a velocidade vertical estiver próxima de zero
-        estaNoChao = Mathf.Abs(rb.linearVelocity.y) < 0.1f;
+        estaNoChao = Mathf.Abs(rb.linearVelocity.y) < 0.01f;
 
         // Atualiza as variáveis do Animator (garanta que o nome seja exatamente idêntico)
         animator.SetBool("isGrounded", estaNoChao);
