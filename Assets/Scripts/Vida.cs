@@ -6,7 +6,7 @@ public class Vida : MonoBehaviour
 {
     [Header("Configurações de Vida")]
     [SerializeField] private int vidaMaxima = 100;
-    private int vidaAtual;
+    private int vidaAtual = 100;
     public TextMeshProUGUI textoVidaAtual;
 
     public SpriteRenderer spriteRenderer;
@@ -17,15 +17,11 @@ public class Vida : MonoBehaviour
     private float timerFlash;
     private bool piscando;
 
-
-
-
-
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         corOriginal = spriteRenderer.color;
-        
+
         vidaAtual = vidaMaxima;
         textoVidaAtual.text = ($"VIDA RESTANTE {vidaAtual}");
 
@@ -39,7 +35,10 @@ public class Vida : MonoBehaviour
 
             if (timerFlash >= duracaoFlash)
             {
-                spriteRenderer.color = corOriginal; // Volta a cor normal
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.color = corOriginal; // Volta a cor normal
+                }
                 piscando = false;
             }
         }
@@ -50,23 +49,52 @@ public class Vida : MonoBehaviour
 
     public void ReceberDano(int quantidadeDano)
     {
-        
+
+        if (vidaAtual <= 0 || quantidadeDano <= 0) return;
+
         vidaAtual -= quantidadeDano;
-        Debug.Log($"{gameObject.name} recebeu {quantidadeDano} de dano! Vida restante: {vidaAtual}");
-        textoVidaAtual.text = ($"VIDA RESTANTE {vidaAtual}");
-        if (vidaAtual <= 0)
+        
+
+        // Se sobreviveu ao dano, ativa o efeito de piscar
+        if (vidaAtual > 0)
+        {
+            textoVidaAtual.text = ($"VIDA RESTANTE {vidaAtual}");
+            if (spriteRenderer != null)
+            {
+                Debug.Log($"Mudei a cor para: {corDano} no objeto {spriteRenderer.gameObject.name}");
+                spriteRenderer.color = corDano;
+                timerFlash = 0f;
+                piscando = true;
+            }
+            else {
+                Debug.LogError("O SpriteRenderer NAO ESTA ATRIBUIDO no script Vida!");
+            }
+
+
+        }
+        else
         {
             vidaAtual = 0;
             Morrer();
         }
-        spriteRenderer.color = corDano;
-        timerFlash = 0f;
-        piscando = true;
+    
 
 
 
 
+}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            Morrer();       
+        
+        }
     }
+
+
+
 
     private void Morrer()
     {

@@ -6,8 +6,7 @@ public class ArmadilhasConfig : MonoBehaviour
 
     [Header("Configuração da armadilha")]
     [SerializeField] private TipoArmadilha tipo = TipoArmadilha.Espeto;
-    [SerializeField] private int quantidadeDano = 10;
-    [SerializeField] private bool destruirAoColidir = false;
+    
 
     private Animator anim;
     [Header("Espeto")]
@@ -23,11 +22,14 @@ public class ArmadilhasConfig : MonoBehaviour
     [Header("Torreta")]
     public GameObject preFabProjetil;
     public Transform disparador;
+    private AudioSource audioSource;
+    public AudioClip somDisparo;
     
     
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
     }
 
@@ -79,32 +81,17 @@ public class ArmadilhasConfig : MonoBehaviour
         }
     }
 
-    public void IniciarTorreta() 
+    public void DispararTorreta() 
     {
 
         Instantiate(preFabProjetil, disparador.position, disparador.rotation);
+        audioSource.PlayOneShot(somDisparo);
         
     }
 
     
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Busca o componente Vida diretamente no objeto colidido
-        Vida componenteVida = collision.GetComponent<Vida>();
-
-        // Se encontrar o componente Vida, aplica o dano
-        if (componenteVida != null)
-        {
-            componenteVida.ReceberDano(quantidadeDano);
-
-            // Destrói o objeto atual se for um projétil
-            if (destruirAoColidir)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
+    
 }
 
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5248855802137852433}
   - component: {fileID: 4841250637421010625}
   - component: {fileID: 8451712469688701756}
+  - component: {fileID: -5917990010536549483}
   m_Layer: 0
   m_Name: Projetil
   m_TagString: Untagged
@@ -108,8 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjetilConfig
   velocidade: 3
-  quantidadeDano: 10
-  destruirAoColidir: 1
 --- !u!50 &5248855802137852433
 Rigidbody2D:
   serializedVersion: 5
@@ -195,3 +194,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-5917990010536549483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777400884096770951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09b06aaca07b81c498207d082fcdae06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dano
+  quantidadeDano: 10
+  destruirAoColidir: 1

@@ -9,10 +9,11 @@ public class ControleJogador2D : MonoBehaviour
     [Header("Configurações de Movimento")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 2f;
-
+    //[SerializeField] private Collider2D colisorPe;
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+
 
     private float moveInputX;
     private bool estaNoChao;

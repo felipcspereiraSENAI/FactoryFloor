@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6229766954686760913}
   - component: {fileID: 4713954011375882943}
   - component: {fileID: 7903898263761266480}
+  - component: {fileID: 1282704196974564159}
   m_Layer: 0
   m_Name: SpikeTrap
   m_TagString: Untagged
@@ -222,11 +223,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmadilhasConfig
   tipo: 0
-  quantidadeDano: 50
-  destruirAoColidir: 0
   atrasoInicial: 2
   tempoAtivado: 1
   tempoDesativado: 1
   colisorDano: {fileID: 6229766954686760913}
   preFabProjetil: {fileID: 0}
   disparador: {fileID: 0}
+--- !u!114 &1282704196974564159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280014603188158620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09b06aaca07b81c498207d082fcdae06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dano
+  quantidadeDano: 10
+  destruirAoColidir: 0
